@@ -1,0 +1,14 @@
+currently:
+	showing a block 
+	free camera movement with player
+
+finished:
+	1. change player movement from (WASD, front) -> (WASD, shift, space)
+	2. add textures to the block (single Block)
+
+current goal:
+	3. move the textures to the chunk and make the chunk class the block manager
+
+next steps:
+	0. create a chunk without map gen
+	0. create a map gen and load chunks
