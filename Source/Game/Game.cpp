@@ -50,9 +50,10 @@ namespace game {
 		
 		UNUSED(deltaTime);
 
-		Block* block = new Block(1,0,3, block_t::_dirt);
-		block->loadShader();
-		block->loadResources();
+		Chunk* chunk = new Chunk(0,0);
+
+		chunk->loadShaders();
+		chunk->loadResources();
 
 		while(!glfwWindowShouldClose(this->_window)) {
 			currentFrame = static_cast<float>(glfwGetTime());
@@ -74,14 +75,13 @@ namespace game {
 
 			//render
 			this->_handler->renderAll(view, projection);
-			block->render(view, projection);
-			//chunk->render(view, projection);
+			chunk->render(view, projection);
 
 			glfwSwapBuffers(this->_window);
 			glfwPollEvents();
 		}
 
-		delete block;
+		delete chunk;
 	}
 
 	void Game::processInput() {

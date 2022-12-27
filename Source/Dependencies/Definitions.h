@@ -12,7 +12,9 @@
 #define PLAYER_BASE_SPEED     0.05f
 #define BLOCK_SCALE           1.00f
 #define CURSOR_MOVEMENT_SCALE 0.50f
-#define CHUNK_SIZE            16
+#define CHUNK_SIZE            4
+#define Y_MAX                 4
+#define TEXTURE_COUNT         001
 
 #define UNUSED(x) [&x]{}()
 #define arrLen(x) (int)(sizeof(x)/sizeof(x[0]))

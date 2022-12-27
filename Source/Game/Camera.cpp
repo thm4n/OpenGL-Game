@@ -2,7 +2,7 @@
 
 namespace game {
 	Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) {
-		this->_front            = -glm::normalize(glm::vec3(1.0f, 0.0f, -3.0f));
+		this->_front            = glm::normalize(glm::vec3(1.0f, 0.0f, -3.0f));
 		this->_mouseSensitivity = SENSITIVITY;
 		this->_zoom             = ZOOM;
 		this->_position         = position;

@@ -15,6 +15,7 @@ namespace game {
 		this->_vel += this->_acc;
 		this->_pos += this->_vel;
 		this->_camera->_position = this->_pos;
+		this->_camera->_position.y = this->_pos.y + 1;
 	}
 	
 	void Player::render(glm::mat4 view, glm::mat4 projection) {

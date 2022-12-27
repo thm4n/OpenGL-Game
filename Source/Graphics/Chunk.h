@@ -10,6 +10,9 @@ namespace game {
 		Chunk(int x, int y);
 		~Chunk();
 
+		void loadShaders();
+		void loadResources();
+
 		void update();
 		void render(glm::mat4 view, glm::mat4 projection);
 
@@ -23,6 +26,10 @@ namespace game {
 		unsigned int _ebo;
 	
 		glm::mat4 _model;
+
+		Block* _blocks[CHUNK_SIZE][Y_MAX][CHUNK_SIZE];
+	
+		unsigned int _textures[TEXTURE_COUNT];
 	};
 }
 
