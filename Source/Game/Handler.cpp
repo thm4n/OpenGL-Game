@@ -39,6 +39,7 @@ namespace game {
 		for(size_t i = 0; i < this->_objects.size(); i++) {
 			this->_objects[i]->render(view, projection);
 		}
+		this->_player->render(view, projection);
 	}
 
 	void Handler::inputUpdate(int key, int action) {

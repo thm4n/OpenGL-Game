@@ -16,6 +16,9 @@
 #define Y_MAX                 4
 #define TEXTURE_COUNT         001
 
+#define PLUS_ARM_LEN 12
+#define PLUS_ARM_WID 01
+
 #define UNUSED(x) [&x]{}()
 #define arrLen(x) (int)(sizeof(x)/sizeof(x[0]))
 #define printmat4(x) [&x]{for(int i = 0; i < 4; i++) printf("|%.2f, %.2f, %.2f, %.2f|\n", x[i][0], x[i][1], x[i][2], x[i][3]);}()

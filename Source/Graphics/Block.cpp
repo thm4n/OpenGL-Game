@@ -67,8 +67,6 @@ namespace game {
 
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
-
-		printf("game::Block::Block(int,int,int,block_t) was called!\n");
 	}
 	
 	void Block::setVals(int x, int y, int z, block_t type) {

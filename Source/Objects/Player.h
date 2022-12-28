@@ -13,6 +13,8 @@ namespace game {
 		Player();
 		~Player();
 
+		void loadShader();
+
 		virtual void update();
 		virtual void render(glm::mat4 view, glm::mat4 projection);
 	

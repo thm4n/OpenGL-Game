@@ -5,10 +5,57 @@ namespace game {
 		this->_type = obj_t::_player;
 		this->_shader = nullptr;
 		this->_camera = nullptr;
+
+		float vertices[] = {
+			-PLUS_ARM_WID, -PLUS_ARM_LEN,
+			+PLUS_ARM_WID, -PLUS_ARM_LEN,
+
+			-PLUS_ARM_WID, +PLUS_ARM_LEN,
+			+PLUS_ARM_WID, +PLUS_ARM_LEN,
+
+			-PLUS_ARM_LEN, -PLUS_ARM_WID,
+			-PLUS_ARM_LEN, +PLUS_ARM_WID,
+			
+			+PLUS_ARM_LEN, -PLUS_ARM_WID,
+			+PLUS_ARM_LEN, +PLUS_ARM_WID,
+		};
+
+		for(size_t i = 1; i < sizeof(vertices) / sizeof(float); i += 2) {
+			vertices[i - 1] *= (2 / WINDOW_BASE_WIDTH);
+			
+			vertices[i]     *= (2 / WINDOW_BASE_HEIGHT);
+		}
+
+		unsigned int indices[] {
+			0,1,3,
+			0,2,3,
+
+			4,5,7,
+			4,6,7
+		};
+
+		glGenVertexArrays(1, &this->_vao);
+		glGenBuffers(1, &this->_vbo);
+		glGenBuffers(1, &this->_ebo);
+
+		glBindVertexArray(this->_vao);
+
+		glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
 	}
 
 	Player::~Player() {
 		
+	}
+
+	void Player::loadShader() {
+		this->_shader = new Shader("Player.vs", "Player.fs");
 	}
 
 	void Player::update() {
@@ -21,6 +68,16 @@ namespace game {
 	void Player::render(glm::mat4 view, glm::mat4 projection) {
 UNUSED(view);
 UNUSED(projection);
+
+		this->_shader->use();
+
+		glEnable(GL_BLEND);
+
+		glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ZERO);
+		glBindVertexArray(this->_vao);
+		glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+
+		glDisable(GL_BLEND);
 	}
 
 	void Player::inputUpdate(int key, int action) {

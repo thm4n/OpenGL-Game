@@ -60,6 +60,8 @@ namespace game {
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
+			std::cout << "frame rate: " << 1/deltaTime << std::endl;
+
 			this->processInput();
 
 			glClearColor(WINDOW_CLEAR_COLOR);
@@ -127,6 +129,6 @@ namespace game {
 		Game::_camera = new Camera(this->_handler->getPlayer()->getPosition());
 		player->setCamera(Game::_camera);
 
-
+		player->loadShader();
 	}
 }
