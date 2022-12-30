@@ -8,9 +8,10 @@ finished:
 	3. move the textures to the chunk and make the chunk class the block manager
 	4. add a plus as screen view center
 	5. create a chunk without map gen
-
-current goal:
 	6. move all control over Chunks to Map class
 
+current goal:
+	0. make a walkable state to player
+	
 next steps:
 	0. create a map gen and load chunks
