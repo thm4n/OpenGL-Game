@@ -6,9 +6,11 @@ finished:
 	1. change player movement from (WASD, front) -> (WASD, shift, space)
 	2. add textures to the block (single Block)
 	3. move the textures to the chunk and make the chunk class the block manager
+	4. add a plus as screen view center
+	5. create a chunk without map gen
 
 current goal:
-	4. create a chunk without map gen
+	6. move all control over Chunks to Map class
 
 next steps:
 	0. create a map gen and load chunks

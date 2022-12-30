@@ -12,6 +12,7 @@
 #define PLAYER_BASE_SPEED     0.05f
 #define BLOCK_SCALE           1.00f
 #define CURSOR_MOVEMENT_SCALE 0.50f
+#define MAP_SIZE              8
 #define CHUNK_SIZE            4
 #define Y_MAX                 4
 #define TEXTURE_COUNT         001

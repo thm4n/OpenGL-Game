@@ -23,10 +23,13 @@ namespace game {
 		Game::_prev_mouse_position = glm::vec2(WINDOW_BASE_WIDTH, WINDOW_BASE_HEIGHT) * 0.5f;
 
 		stbi_set_flip_vertically_on_load(true);
+
+		this->_map = new Map();
 	}
 
 	Game::~Game() {
 		glfwDestroyWindow(this->_window);
+		delete this->_map;
 		delete Game::_handler;
 		delete Game::_camera;
 	}
@@ -38,9 +41,6 @@ namespace game {
 	void Game::beginGameLoop() {
 		glm::mat4 view;
 		glm::mat4 projection;
-		//glm::mat4 Model;
-
-		//Chunk* chunk = new Chunk(0,0);
 
 		glEnable(GL_DEPTH_TEST);
 
@@ -50,17 +50,17 @@ namespace game {
 		
 		UNUSED(deltaTime);
 
-		Chunk* chunk = new Chunk(0,0);
+		this->_map->loadShaders();
+		this->_map->loadResources();
 
-		chunk->loadShaders();
-		chunk->loadResources();
+		this->_map->loadMap();
 
 		while(!glfwWindowShouldClose(this->_window)) {
 			currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			std::cout << "frame rate: " << 1/deltaTime << std::endl;
+			//std::cout << "frame rate: " << 1/deltaTime << std::endl;
 
 			this->processInput();
 
@@ -73,17 +73,15 @@ namespace game {
 
 			//update
 			this->_handler->updateAll();
-			//chunk->update();
+			this->_map->update();
 
 			//render
 			this->_handler->renderAll(view, projection);
-			chunk->render(view, projection);
+			this->_map->render(view, projection);
 
 			glfwSwapBuffers(this->_window);
 			glfwPollEvents();
 		}
-
-		delete chunk;
 	}
 
 	void Game::processInput() {

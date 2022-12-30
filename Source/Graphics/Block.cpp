@@ -1,6 +1,9 @@
 #include "Block.h"
 
 namespace game {
+	Shader* Block::_shader;
+	unsigned int Block::_textures[TEXTURE_COUNT];
+
 	Block::Block() {
 		
 	}
@@ -68,6 +71,32 @@ namespace game {
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 	}
+
+	void Block::loadTextures() {
+		glGenTextures(1, &Block::_textures[0]);
+		glBindTexture(GL_TEXTURE_2D, Block::_textures[0]);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		int width, height, nrChannels;
+
+		unsigned char* data= stbi_load(textures::getTexturePath("Grass.png"), &width, &height, &nrChannels, 0);
+		if(!data)
+			throw Exception(Exception::texture_load_error, "Unable to load texture: Resources/Textures/Grass.jpg");
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		stbi_image_free(data);
+	}
+
+	void Block::setShader(Shader* shader) {
+		Block::_shader = shader;
+	}
 	
 	void Block::setVals(int x, int y, int z, block_t type) {
 		this->_pos = glm::vec3(x,y,z);
@@ -75,8 +104,6 @@ namespace game {
 	}
 
 	Block::~Block() {
-		printf("game::Block::~Block() was called!\n");
-
 		glDeleteVertexArrays(1, &this->_vao);
 		glDeleteBuffers(1, &this->_vbo);
 		//glDeleteBuffers(1, &this->_ebo);
@@ -90,9 +117,9 @@ namespace game {
 		
 	}
 		
-	void Block::render(glm::mat4 view, glm::mat4 projection) {
-UNUSED(view);
-UNUSED(projection);
+	void Block::render() {
+		glBindTexture(GL_TEXTURE_2D, this->_textures[0]);
+		this->_shader->setInt("tex", 0);
 
 		glBindVertexArray(this->_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);

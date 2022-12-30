@@ -12,7 +12,7 @@ glad.o:
 	g++ -c ~/opt/glad/src/glad.c -o glad.o ${FLAGS}
 
 %.o: %.cpp
-	g++ -c -o $@ $^ ${FLAGS} > BuildError.err
+	g++ -c -o $@ $^ ${FLAGS}
 
 
 run: build

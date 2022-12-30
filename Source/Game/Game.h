@@ -39,10 +39,10 @@ namespace game {
 	private:
 		glm::ivec2 _winDims;
 
+		Map* _map;
+
 		static Camera* _camera;
-
 		static Handler* _handler;
-
 		static glm::vec2 _prev_mouse_position;
 	};
 }

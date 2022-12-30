@@ -10,26 +10,17 @@ namespace game {
 		Chunk(int x, int y);
 		~Chunk();
 
-		void loadShaders();
-		void loadResources();
+		static void setShader(Shader* shader);
 
 		void update();
-		void render(glm::mat4 view, glm::mat4 projection);
+		void render();
 
 	private:
-		Shader* _shader;
-
 		glm::vec2 _pos;
 
-		unsigned int _vao;
-		unsigned int _vbo;
-		unsigned int _ebo;
-	
-		glm::mat4 _model;
+		static Shader* _shader;
 
 		Block* _blocks[CHUNK_SIZE][Y_MAX][CHUNK_SIZE];
-	
-		unsigned int _textures[TEXTURE_COUNT];
 	};
 }
 
