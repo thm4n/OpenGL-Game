@@ -15,6 +15,8 @@ namespace game {
 		void update();
 		void render();
 
+		Block* getFirstBlockBelowPos(glm::vec3 position);
+
 	private:
 		glm::vec2 _pos;
 

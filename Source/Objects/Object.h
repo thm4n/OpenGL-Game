@@ -2,6 +2,7 @@
 #define _OBJECT_H_
 
 #include "../main.h"
+#include "../Graphics/Map.h"
 
 namespace game {
 	class Object {

@@ -5,10 +5,8 @@
 #include "Chunk.h"
 
 namespace game {
-	class Map {
-	public:
-		Map();
-		~Map();
+	namespace Map {
+		void freeChunks();
 
 		void update();
 		void render(glm::mat4 view, glm::mat4 projection);
@@ -24,10 +22,7 @@ namespace game {
 //		void loadMapFromSave();
 //		void saveMap();
 
-	private:
-		Chunk* _chunks[MAP_SIZE][MAP_SIZE];
-
-		Shader* _shader;
+		Block* getFirstBlockBelowPos(glm::vec3 position);
 	};
 }
 

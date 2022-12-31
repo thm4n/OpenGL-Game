@@ -3,15 +3,19 @@ currently:
 	free camera movement with player
 
 finished:
-	1. change player movement from (WASD, front) -> (WASD, shift, space)
-	2. add textures to the block (single Block)
-	3. move the textures to the chunk and make the chunk class the block manager
-	4. add a plus as screen view center
-	5. create a chunk without map gen
-	6. move all control over Chunks to Map class
+	01. change player movement from (WASD, front) -> (WASD, shift, space)
+	02. add textures to the block (single Block)
+	03. move the textures to the chunk and make the chunk class the block manager
+	04. add a plus as screen view center
+	05. create a chunk without map gen
+	06. move all control over Chunks to Map class
+	07. set fps and ups control and monitoring
+	08. create basic help functions for Objects to interact with Map
+	09. working map with floor limit
 
 current goal:
-	0. make a walkable state to player
-	
+	10. fix smooth movement! jeeez its annoying!
+
 next steps:
+	0. make a walkable state to player
 	0. create a map gen and load chunks

@@ -10,12 +10,17 @@
 #define WH_RATIO ((double)WINDOW_BASE_WIDTH / (double)WINDOW_BASE_HEIGHT)
 
 #define PLAYER_BASE_SPEED     0.05f
+#define GRAVITY               0.00f
+
 #define BLOCK_SCALE           1.00f
 #define CURSOR_MOVEMENT_SCALE 0.50f
-#define MAP_SIZE              8
+#define MAP_SIZE              4
 #define CHUNK_SIZE            4
-#define Y_MAX                 4
-#define TEXTURE_COUNT         001
+#define Y_MAX                 8
+#define TEXTURE_COUNT         1
+
+#define FPS_CAP               60.0f
+#define TICK_RATE             3
 
 #define PLUS_ARM_LEN 12
 #define PLUS_ARM_WID 01

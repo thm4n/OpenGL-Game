@@ -7,11 +7,11 @@ namespace game {
 		this->_pos = glm::vec2(x, y);
 		
 		for(int i = 0; i < CHUNK_SIZE; i++) {
-			//for(int j = 0; j < Y_MAX; j++){
+			for(int j = 0; j < Y_MAX; j++){
 				for(int k = 0; k < CHUNK_SIZE; k++) {
-					this->_blocks[i][0][k] = new Block(i, 0, k, block_t::_dirt);
+					this->_blocks[i][j][k] = j == 0 ? new Block(i, 0, k, block_t::_dirt) : nullptr;
 				}
-			//}
+			}
 		}
 	}
 
@@ -62,5 +62,19 @@ namespace game {
 				}
 			//}
 		}
+	}
+
+	Block* Chunk::getFirstBlockBelowPos(glm::vec3 position) {
+		Block* temp = nullptr;
+		int x = position.x * (position.x > 0 ? 1 : -1);
+		int z = position.z * (position.z > 0 ? 1 : -1);
+
+		for(int i = position.y - 1; i >= 0; i--) {
+			temp = this->_blocks[x][i][z];
+			if(temp != nullptr)
+				return temp;
+		}
+		std::cout << "\nNULL OUT \n";
+		return nullptr;
 	}
 }

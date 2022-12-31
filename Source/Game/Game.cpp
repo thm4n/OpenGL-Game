@@ -24,13 +24,11 @@ namespace game {
 		Game::_prev_mouse_position = glm::vec2(WINDOW_BASE_WIDTH, WINDOW_BASE_HEIGHT) * 0.5f;
 
 		stbi_set_flip_vertically_on_load(true);
-
-		this->_map = new Map();
 	}
 
 	Game::~Game() {
 		glfwDestroyWindow(this->_window);
-		delete this->_map;
+		Map::freeChunks();
 		delete Game::_handler;
 		delete Game::_camera;
 	}
@@ -54,10 +52,10 @@ namespace game {
 
 		size_t frames = 0, updates = 0;
 
-		this->_map->loadShaders();
-		this->_map->loadResources();
+		Map::loadShaders();
+		Map::loadResources();
 
-		this->_map->loadMap();
+		Map::loadMap();
 
 		while(!glfwWindowShouldClose(this->_window)) {
 			nowTime = std::chrono::high_resolution_clock::now();
@@ -76,14 +74,14 @@ namespace game {
 			//update
 			while(delta >= 1.00f) {
 				this->_handler->updateAll();
-				this->_map->update();
+				Map::update();
 				updates++;
 				delta--;
 			}
 
 			//render
 			this->_handler->renderAll(view, projection);
-			this->_map->render(view, projection);
+			Map::render(view, projection);
 			frames++;
 
 			glfwSwapBuffers(this->_window);
@@ -91,7 +89,7 @@ namespace game {
 
 			if(std::chrono::nanoseconds(std::chrono::high_resolution_clock::now() - timer) > std::chrono::seconds(1)) {
 				timer += std::chrono::seconds(1);
-				printf("fpsaaaaaa: %ld\nups: %ld\n\n", frames, updates);
+				printf("fps: %ld\nups: %ld\n\n", frames, updates);
 				frames = 0;
 				updates = 0;
 			}

@@ -2,9 +2,9 @@
 
 namespace game {
 	Object::Object() {
-		this->_pos = glm::vec3(0);
+		this->_pos = glm::vec3(0, 2, 0);
 		this->_vel = glm::vec3(0);
-		this->_acc = glm::vec3(0);
+		this->_acc = glm::vec3(0, GRAVITY, 0);
 		this->_type = obj_t::_void;
 	}
 

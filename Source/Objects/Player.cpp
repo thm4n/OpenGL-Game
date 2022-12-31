@@ -59,10 +59,23 @@ namespace game {
 	}
 
 	void Player::update() {
-		this->_vel += this->_acc;
+		Block* temp = Map::getFirstBlockBelowPos(this->_pos);
+		int y_min = 0;
+		if(temp != nullptr) {
+			glm::vec3 pos = temp->getPos();
+			printf("Block position: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
+			y_min = temp->getPos().y;
+		}
+		
 		this->_pos += this->_vel;
+		this->_vel += this->_acc;
+		
+		this->_pos.y = this->_pos.y > y_min ? this->_pos.y : y_min;
+
 		this->_camera->_position = this->_pos;
-		this->_camera->_position.y = this->_pos.y - 1;
+		this->_camera->_position.y = this->_pos.y + 1;
+
+		printf("Player position: (%.2f, %.2f, %.2f)\n", this->_pos.x, this->_pos.y, this->_pos.z);
 	}
 	
 	void Player::render(glm::mat4 view, glm::mat4 projection) {
