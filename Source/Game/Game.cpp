@@ -12,6 +12,7 @@ namespace game {
 		}
 		glfwMakeContextCurrent(this->_window);
 		glfwGetFramebufferSize(this->_window, &this->_winDims.x, &this->_winDims.y);
+		glfwSwapInterval(0);
 
 		glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -44,11 +45,14 @@ namespace game {
 
 		glEnable(GL_DEPTH_TEST);
 
-		float currentFrame;
-		float deltaTime = 0.0f;
-		float lastFrame = 0.0f;
-		
-		UNUSED(deltaTime);
+		std::chrono::high_resolution_clock::time_point 
+							nowTime,
+							lastTime = std::chrono::high_resolution_clock::now(),
+							timer = lastTime;
+		double ns = 1000000000.0f / FPS_CAP;
+		double delta = 0.0f;
+
+		size_t frames = 0, updates = 0;
 
 		this->_map->loadShaders();
 		this->_map->loadResources();
@@ -56,11 +60,9 @@ namespace game {
 		this->_map->loadMap();
 
 		while(!glfwWindowShouldClose(this->_window)) {
-			currentFrame = static_cast<float>(glfwGetTime());
-			deltaTime = currentFrame - lastFrame;
-			lastFrame = currentFrame;
-
-			//std::cout << "frame rate: " << 1/deltaTime << std::endl;
+			nowTime = std::chrono::high_resolution_clock::now();
+			delta +=  (std::chrono::nanoseconds(nowTime - lastTime)).count() / ns;
+			lastTime = nowTime;
 
 			this->processInput();
 
@@ -72,15 +74,27 @@ namespace game {
 			view = this->_camera->getViewMatrix();
 
 			//update
-			this->_handler->updateAll();
-			this->_map->update();
+			while(delta >= 1.00f) {
+				this->_handler->updateAll();
+				this->_map->update();
+				updates++;
+				delta--;
+			}
 
 			//render
 			this->_handler->renderAll(view, projection);
 			this->_map->render(view, projection);
+			frames++;
 
 			glfwSwapBuffers(this->_window);
 			glfwPollEvents();
+
+			if(std::chrono::nanoseconds(std::chrono::high_resolution_clock::now() - timer) > std::chrono::seconds(1)) {
+				timer += std::chrono::seconds(1);
+				printf("fpsaaaaaa: %ld\nups: %ld\n\n", frames, updates);
+				frames = 0;
+				updates = 0;
+			}
 		}
 	}
 
